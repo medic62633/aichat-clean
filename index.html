@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat - Powered by GodForever</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-robot"></i> AI Chat</h2>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="user-section">
+                <div class="user-info" id="userInfo">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Loading...</div>
+                        <div class="user-role" id="userRole">...</div>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+                <div class="admin-actions" id="adminActions" style="display: none;">
+                    <a href="user-management.html" class="admin-link" title="User Management">
+                        <i class="fas fa-users-cog"></i>
+                        <span>Manage Users</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="api-key-section">
+                <label for="apiKey">GodForever API Key:</label>
+                <input type="password" id="apiKey" placeholder="Enter your GodForever API key" />
+                <button id="saveApiKey">Save</button>
+                
+                <label for="openaiApiKey" style="margin-top: 15px;">OpenAI API Key (Optional):</label>
+                <input type="password" id="openaiApiKey" placeholder="Enter your OpenAI API key" />
+                <button id="saveOpenaiApiKey">Save</button>
+                <small style="color: #888; font-size: 12px; display: block; margin-top: 5px;">
+                    Used for GPT-4o, GPT-4, etc. Falls back to GodForever if not provided.
+                </small>
+            </div>
+
+            <div class="model-section">
+                <label for="modelSelect">Select Model:</label>
+                <select id="modelSelect">
+                    <option value="">Choose a model...</option>
+                    <!-- OpenAI Models -->
+                    <optgroup label="OpenAI">
+                        <option value="gpt-4o">GPT-4o</option>
+                        <option value="gpt-4o-mini" selected>GPT-4o Mini</option>
+                        <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                        <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                        <option value="o1-preview">o1 Preview</option>
+                        <option value="o1-mini">o1 Mini</option>
+                    </optgroup>
+                    <!-- Anthropic Models -->
+                    <optgroup label="Anthropic">
+                        <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
+                        <option value="claude-3-opus-20240229">Claude 3 Opus</option>
+                        <option value="claude-3-haiku-20240307">Claude 3 Haiku</option>
+                    </optgroup>
+                    <!-- Google Models -->
+                    <optgroup label="Google">
+                        <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                        <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash Experimental</option>
+                    </optgroup>
+                    <!-- Meta Models -->
+                    <optgroup label="Meta">
+                        <option value="meta-llama/Llama-3.3-70B-Instruct-Turbo">Llama 3.3 70B</option>
+                        <option value="meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo">Llama 3.2 90B Vision</option>
+                    </optgroup>
+                    <!-- DeepSeek Models -->
+                    <optgroup label="DeepSeek">
+                        <option value="deepseek-chat">DeepSeek V3</option>
+                        <option value="deepseek/deepseek-r1">DeepSeek R1</option>
+                    </optgroup>
+                    <!-- Mistral Models -->
+                    <optgroup label="Mistral">
+                        <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral 8x7B</option>
+                        <option value="mistralai/mistral-nemo">Mistral Nemo</option>
+                    </optgroup>
+                    <!-- xAI Models -->
+                    <optgroup label="xAI">
+                        <option value="x-ai/grok-3-beta">Grok 3 Beta</option>
+                        <option value="x-ai/grok-3-mini-beta">Grok 3 Mini</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="conversation-section">
+                <div class="conversation-header">
+                    <span>Conversations</span>
+                    <button id="newChat" title="New Chat">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="conversation-list" id="conversationList">
+                    <!-- Conversations will be populated here -->
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="powered-by">
+                    Powered by <a href="#" target="_blank">GodForever</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="main-content">
+            <div class="chat-header">
+                <button class="mobile-sidebar-toggle" id="mobileSidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="model-info" id="modelInfo">
+                    <span id="currentModel">Select a model to start chatting</span>
+                </div>
+                <div class="chat-actions">
+                    <button id="clearChat" title="Clear Chat">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    <div class="welcome-content">
+                        <h3><i class="fas fa-robot"></i> Welcome to AI Chat</h3>
+                        <p>Powered by GodForever - Your gateway to seamless, affordable AI access</p>
+                        <div class="welcome-steps">
+                            <div class="step">
+                                <i class="fas fa-key"></i>
+                                <span>1. Enter your GodForever API key</span>
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-cog"></i>
+                                <span>2. Choose from 200+ AI models</span>
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-comment"></i>
+                                <span>3. Start chatting!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"
+                        rows="1"
+                    ></textarea>
+                    <button id="sendButton" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span class="input-hint">AI can make mistakes. Please verify important information.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-robot fa-spin"></i>
+            <span>AI is thinking...</span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="auth.js"></script>
+    <script src="multi-session.js"></script>
+    <script src="exclusive-login.js"></script>
+    <script src="universal-login.js"></script>
+    <script src="session-switcher.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

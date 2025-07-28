@@ -1,0 +1,68 @@
+{
+  "name": "ai-chat-godforever",
+  "version": "1.0.0",
+  "description": "A modern, ChatGPT-like web interface that provides access to over 200 AI models through GodForever's unified API",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server --port=3000 --open=/index.html",
+    "build": "echo 'No build step required - this is a static website'",
+    "lint": "npx eslint script.js",
+    "format": "npx prettier --write *.html *.css *.js *.md"
+  },
+  "keywords": [
+    "ai",
+    "chat",
+    "chatgpt",
+    "godforever",
+    "openai",
+    "anthropic",
+    "claude",
+    "gemini",
+    "llama",
+    "api",
+    "interface",
+    "frontend"
+  ],
+  "author": "AI Chat Team",
+  "license": "MIT",
+  "homepage": "https://github.com/medic62633/aichat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medic62633/aichat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/medic62633/aichat/issues"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "live-server": "^1.2.2",
+    "prettier": "^3.0.0",
+    "serve": "^14.0.0"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ],
+  "files": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "config.js",
+    "auth.js",
+    "login.html",
+    "user-management.html",
+    "user-management.js",
+    "multi-session.js",
+    "exclusive-login.js",
+    "universal-login.js",
+    "session-switcher.js",
+    "credential-generator.js",
+    "README.md"
+  ]
+} 
